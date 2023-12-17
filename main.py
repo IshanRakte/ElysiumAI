@@ -13,7 +13,7 @@ api_key = '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'
 telegram_token = '6723957326:AAFby6ENH9QYHGhdjOvKGBk3PC0eMiQMjDY'
 telegram_chat_id = '-4077193516'
 
- 
+
 def generate_meeting_invite(agenda, time, duration, venue, name, date):
     prompt = f"Generate a well-structured meeting invitation for a discussion about **{agenda}**. The meeting is scheduled on **{date}** at **{time}** for **{duration}** hours at **{venue}**. You are the organizer, and your name is **{name}**. Include important details such as the subject, introduction, meeting details, and closing. Make it formal and informative. Emphasize key information using markdown-like formatting."
     response = openai.Completion.create(
@@ -53,6 +53,29 @@ def takecommand():
             return query
         except Exception as e:
             return "Some Error Occurred. Sorry from Elysium"
+
+
+# Function to send reminders
+def send_reminder(agenda, timing):
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+    async def _send_reminder():
+        reminder_message = f"Reminder: Meeting '{agenda}' will start in {timing}."
+        await send_telegram_message(reminder_message, telegram_token, telegram_chat_id)
+
+    loop.run_until_complete(_send_reminder())
+
+
+# Modify the schedule_reminders function
+def schedule_reminders(start_datetime, agenda):
+    reminder_30min = start_datetime - timedelta(minutes=30)
+    reminder_15min = start_datetime - timedelta(minutes=15)
+
+    threading.Timer((reminder_30min - datetime.now()).total_seconds(), send_reminder,
+                    args=(agenda, "30 minutes")).start()
+    threading.Timer((reminder_15min - datetime.now()).total_seconds(), send_reminder,
+                    args=(agenda, "15 minutes")).start()
 
 
 if __name__ == '__main__':
@@ -96,5 +119,7 @@ if __name__ == '__main__':
 
             meeting_invite = generate_meeting_invite(agenda, time, duration, venue, name, date)
             print(meeting_invite)
+            schedule_reminders(start_datetime, agenda)
+            speak(meeting_invite)
 
             asyncio.run(send_telegram_message(meeting_invite, telegram_token, telegram_chat_id))
