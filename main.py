@@ -78,6 +78,12 @@ def schedule_reminders(start_datetime, agenda):
                     args=(agenda, "15 minutes")).start()
 
 
+# Function to cancel the meeting
+def cancel_meeting(agenda, start_datetime):
+    cancel_message = f"The meeting '{agenda}' scheduled for {start_datetime} has been cancelled."
+    asyncio.run(send_telegram_message(cancel_message, telegram_token, telegram_chat_id))
+
+
 if __name__ == '__main__':
     print('Welcome to Jarvis AI')
     speak("Elysium AI")
@@ -123,3 +129,6 @@ if __name__ == '__main__':
             speak(meeting_invite)
 
             asyncio.run(send_telegram_message(meeting_invite, telegram_token, telegram_chat_id))
+
+        elif "cancel meeting" in query.lower():
+            cancel_meeting(agenda, start_datetime)  
