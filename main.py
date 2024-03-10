@@ -5,14 +5,19 @@ import webbrowser
 import openai
 import asyncio
 from datetime import datetime, timedelta
-
+import asyncio
+from telegram import Bot
+from telegram.helpers import escape_markdown
 
 api_key = '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'
+telegram_token = '6723957326:AAFby6ENH9QYHGhdjOvKGBk3PC0eMiQMjDY'
+telegram_chat_id = '-4077193516'
 
+ 
 def generate_meeting_invite(agenda, time, duration, venue, name, date):
     prompt = f"Generate a well-structured meeting invitation for a discussion about **{agenda}**. The meeting is scheduled on **{date}** at **{time}** for **{duration}** hours at **{venue}**. You are the organizer, and your name is **{name}**. Include important details such as the subject, introduction, meeting details, and closing. Make it formal and informative. Emphasize key information using markdown-like formatting."
     response = openai.Completion.create(
-        engine="text-davinci-003",  #text-davinci engine for better performance
+        engine="text-davinci-003",  # text-davinci engine for better performance
         prompt=prompt,
         max_tokens=500,  # Adjust the max_tokens value based on the desired response length
         api_key=api_key
@@ -21,6 +26,13 @@ def generate_meeting_invite(agenda, time, duration, venue, name, date):
     assistant_response = response['choices'][0]['text']
 
     return assistant_response
+
+
+async def send_telegram_message(message, token, chat_id):
+    bot = Bot(token=token)
+    parse_mode = 'MarkdownV2'
+    escaped_message = escape_markdown(message, version=2)
+    await bot.send_message(chat_id=chat_id, text=escaped_message, parse_mode=parse_mode)
 
 
 def speak(text):
@@ -41,6 +53,7 @@ def takecommand():
             return query
         except Exception as e:
             return "Some Error Occurred. Sorry from Elysium"
+
 
 if __name__ == '__main__':
     print('Welcome to Jarvis AI')
@@ -83,3 +96,5 @@ if __name__ == '__main__':
 
             meeting_invite = generate_meeting_invite(agenda, time, duration, venue, name, date)
             print(meeting_invite)
+
+            asyncio.run(send_telegram_message(meeting_invite, telegram_token, telegram_chat_id))
