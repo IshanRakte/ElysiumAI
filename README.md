@@ -1,11 +1,11 @@
 # ElysiumAI
 ## Inspiration
-The inspiration for this project emerged from a dual perspective — one rooted in addressing challenges faced by individuals with disabilities and another aimed at improving overall efficiency in communication. From a disabled perspective, the goal was to alleviate the difficulties posed by manual inputs and limited physical abilities. The vision was to empower individuals through a voice-activated interface, ensuring inclusivity and accessibility in scheduling meetings and appointments.
+The inspiration for this project emerged from a dual perspective — one rooted in addressing challenges faced by individuals with disabilities and another aimed at improving overall efficiency in communication. From a disabled perspective, the goal was to alleviate the difficulties posed by manual inputs and limited physical abilities. The vision was to empoIr individuals through a voice-activated interface, ensuring inclusivity and accessibility in scheduling meetings and appointments.
 
 ## What it does
 Elysium, our innovative voice-activated calendar assistant, seamlessly integrates with Google Calendar and Telegram APIs to transform spoken commands into well-structured meeting invites using OpenAI GPT-3. It empowers users, especially those with disabilities, by providing a hands-free experience for scheduling appointments and meetings. Elysium's capabilities extend beyond individual scheduling, offering efficient mass communication applications for businesses and organizations. With features like asynchronous messaging, Markdown-like markup, and precise datetime calculations, Elysium redefines how users interact with their calendars, making scheduling intuitive, accessible, and inclusive.
 
-## How we built it
+## How I built it
 The development of Elysium involved a collaborative and multidimensional approach, combining expertise in natural language processing, calendar integration, and voice-activated technology. The key steps in building Elysium are as follows:
 
 **Voice-Activated Interface:**
@@ -29,15 +29,8 @@ The development of Elysium involved a collaborative and multidimensional approac
 **Accessibility Considerations:**
 - Addressed accessibility challenges, particularly for individuals with disabilities, by emphasizing hands-free operation and exploring integration with Google's Speech to Text API for improved name interpretation.
 
-## Relevance to "Communication" Track 
 
-**Voice-Activated Communication:**
-- Elysium introduces a groundbreaking voice-activated interface, redefining how users communicate with their calendars. This aligns with the core theme of innovative communication methods.
-
-**Mass Communication Applications:**
-- Elysium extends its capabilities to include mass communication scenarios for businesses and organizations, aligning with the broader communication track's focus on scalable communication solutions.
-
-## Challenges we ran into
+## Challenges I ran into
 - Integrating multiple APIs, including Google Calendar and Telegram, necessitated addressing complexities in API communication and ensuring seamless interoperability.
 
 ## What's next for ElysiumAI
